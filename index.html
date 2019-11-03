@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <title>Rappelz - Tame Simulator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="BlueMystic - 2019">
+    <meta name="copyright" content="BlueMystic">
+    <meta name='description' content='Tame Simulatorfor Rappelz'>
+
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+    <meta expires="Sat, 26 Jul 1997 05:00:00 GMT" />
+    <meta pragma="no-cache" />
+
+    <link rel="shortcut icon" href="img/proxy_icon_2.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="css/jquery.mobile.theme-1.4.5.min.css" />
+    <link rel="stylesheet" href="css/jquery.mobile.icons-1.4.5.min.css" />
+    <link rel="stylesheet" href="css/jquery.mobile.structure-1.4.5.min.css" />
+    <link rel="stylesheet" href="js/jquery-confirm.min.css" />
+    <link rel="stylesheet" href="js/noty/noty.css" />
+
+    <script type="application/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <script type="application/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+
+    <script type="application/javascript" src="js/noty/noty.js"></script>
+    <script type="application/javascript" src="js/jquery-confirm.min.js"></script>
+
+    <style type="text/css">
+        /* Prevent copy paste for all elements except text fields */
+        * {
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+        }
+
+        input,
+        textarea {
+            overflow: hidden;
+            user-select: text;
+            -webkit-user-select: text;
+        }
+
+        /* Oculta la scroll-bar pero sigue permitiendo hacer scroll con el mouse */
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        .ui-page {
+            background-size: auto;
+            background-repeat: repeat;
+        }
+
+        a.media {
+            display: block;
+        }
+
+        div.media {
+            font-size: small;
+            margin: 25px;
+            margin: auto
+        }
+
+        div.media div {
+            font-style: italic;
+            color: #888;
+        }
+
+        .TextLabel {
+            color: white !important;
+        }
+
+        .cls_text_title {
+            color: black !important;
+        }
+
+        .cls_text_normal {
+            color: black;
+        }
+
+        /* Permite que el Panel Scrolee independientemente del Body */
+        .ui-panel.ui-panel-open {
+            position: fixed;
+        }
+
+        .ui-panel-inner {
+            position: absolute;
+            top: 1px;
+            left: 0;
+            right: 0;
+            bottom: 0px;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+
+        .ui-grid-a.align-widgets {
+            display: table;
+        }
+
+        .ui-grid-a.align-widgets>.ui-block-a,
+        .ui-grid-a.align-widgets>.ui-block-b {
+            display: table-cell;
+            float: none;
+            vertical-align: bottom;
+        }
+
+        .column {
+            float: left;
+            width: 12%;
+            /* 8 image containers (use 25% for four, and 50% for two, etc) */
+            max-width: 100px;
+            padding: 5px;
+            text-align: center;
+        }
+
+        /* Clear floats after image containers */
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .overlay {
+            position: relative;
+            left: 30px;
+            top: 30px;
+            color: white;
+            background: orange;
+        }
+
+        /* Container holding the image and the text */
+        .container {
+            position: relative;
+            text-align: center;
+            color: white;
+        }
+
+        /* Top left text over Image */
+        .top-left {
+            position: absolute;
+            top: 8px;
+            left: 16px;
+        }
+
+        /* Bottom right text */
+        .bottom-right {
+            position: absolute;
+            bottom: 8px;
+            right: 6px;
+            text-align: right;
+        }
+
+        .controlgroup-textinput {
+            padding-top: .22em;
+            padding-bottom: .22em;
+        }
+
+        .div-box {
+            width: 96%;
+            height: 12px;
+            text-align: left;
+            border-radius: 5px;
+            background-color: rgba(50, 50, 50, 0.3);
+            margin: 1px;
+            padding: 0.5em;
+            font-size: small;
+        }
+
+        .custom-size-flipswitch.ui-flipswitch .ui-btn.ui-flipswitch-on {
+            text-indent: -5.9em;
+        }
+
+        .custom-size-flipswitch.ui-flipswitch .ui-flipswitch-off {
+            text-indent: 0.5em;
+        }
+
+        /* Custom widths are needed because the length of custom labels differs from
+           the length of the standard labels */
+        .custom-size-flipswitch.ui-flipswitch {
+            width: 8.875em;
+        }
+
+        .custom-size-flipswitch.ui-flipswitch.ui-flipswitch-active {
+            padding-left: 7em;
+            width: 1.875em;
+        }
+
+        @media (min-width: 28em) {
+
+            // Repeated from rule .ui-flipswitch above
+            .ui-field-contain>label+.custom-size-flipswitch.ui-flipswitch {
+                width: 1.875em;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <!-- Pagina de inicio -->
+    <div data-role="page" id="viewMain" class="ui-responsive-panel" data-theme="b">
+
+        <!-- Encabezado -->
+        <div data-role="header" data-theme="b" data-position="fixed">
+            <h1>Tame Simulator</h1>
+        </div>
+        <!-- /header -->
+
+        <!-- Cuerpo -->
+        <div role="main" data-theme="b" class="ui-content jqm-content jqm-fullwidth">
+            <div id="contenido">
+                <!-- ************ AQUI VA EL CONTENIDO DE LA PAGINA ****************** -->
+
+                <div style="text-align: center;"><img src="img/WikiLogo_NEON.png" alt="Cutcsa" id="LogoCutcsa_1" style="vertical-align: middle" /></div>
+                <div class="ui-body ui-body-b ui-corner-all">
+                    <h4>Welcome:</h4>
+                    <li>This is a Taming Simulator for Rappelz, based on Empirical data.</li>
+                    <li>This app was developped exclusively for the <a href="https://rappelz.fandom.com/wiki/Rappelz_Wiki" target="_blank" title="Start">Rappelz Wiki</a></li>
+                    </br>
+                </div>
+
+                <a href="#page2" class="ui-btn ui-btn-a ui-corner-all ui-icon-arrow-r ui-btn-icon-right " title="Start">Start</a>
+            </div>
+        </div>
+        <!-- /main -->
+
+        <!-- Pie de pagina -->
+        <div data-role="footer" data-theme="b" data-position="fixed" style="text-align: center;vertical-align: middle;">
+            <img src="img/ergo-proxy-circled.png" alt="Cutcsa" style="height: 42px; margin: 5px;" />
+            <h2>By <a href="https://rappelz.fandom.com/wiki/User:BlueMystical" target="_blank" title="Start">BlueMystical</a></h2>
+        </div>
+        <!-- /footer -->
+
+    </div>
+    <!-- /page -->
+
+    <!-- Pagina 2 -->
+    <div data-role="page" id="page2" data-theme="b" style="width: 100%">
+
+        <div data-role="popup" id="popINFO" data-theme="a" class="ui-content">
+            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+            <h3>Hello</h3>   
+            <p>This App is a Taming Simulator for Rappelz designed with the sole purpose of helping you to analyze and get strategies to get your dream pet.</p>
+            <p>I've been playing Rappelz since Epic 3, back in 2008, i had gathered a lot of experience and a lot of fails to get the data that feeds this app, it is all based on Empirical experiences, any resemblance with actual data of the game would be mere...AWESOMENESS! it would mean that all my effords had paid.</p>
+            <p>Done my best to get all pets i could in here, but some may be missing or have their tame chances incorrectly, if you know a pet missing feel free to send me the data to add it, i would really apreciate it.</p>
+            <h3>References:</h3>               
+
+                <li><a target="_blank">https://rappelz.fandom.com/wiki/Pets_Mechanics</a></li>
+                <li><a target="_blank">https://rappelz.fandom.com/wiki/Some_Analysis_of_Taming_Success_Rates</a></li>
+                <li><a target="_blank">https://www.elitepvpers.com/forum/rappelz-private-server/</a></li>
+            
+            <p>You can contact me anytime: <a href="https://rappelz.fandom.com/wiki/User:BlueMystical" target="_blank" title="Start">BlueMystical</a></p>
+            <p>Check out our <a href="https://rappelz.fandom.com/wiki/Rappelz_Wiki" target="_blank" title="Start">Rappelz Wiki</a> website!</p>
+        </div>
+
+        <!-- Encabezado -->
+        <div data-role="header" data-theme="b" data-position="fixed">
+            <a href="#popINFO" id="cmdInfo" data-rel="popup" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-info" data-transition="pop">Read Me</a>
+            <h2 id='lblTituloP2'>Tame Simulator</h2>
+
+            <a href="index.html" data-ajax="false" data-icon="lock" class="ui-btn-right  ui-btn-inline" data-inline="true" id="cmdIniciarSesion">Reset</a>
+        </div><!-- /header -->
+
+        <!-- Cuerpo -->
+        <div role="main" class="ui-content" data-theme="b" style="width: 98%">
+
+            <label for="cboCreatureAffiliation">What do you want to tame?:</label>
+            <select name="cboCreatureAffiliation" id="cboCreatureAffiliation">
+                <option value=""></option>
+            </select>
+
+            <label for="cboPetList">Choose your Pet:</label>
+            <select data-theme="a" name="cboPetList" id="cboPetList">
+                <option value=""></option>
+            </select>
+
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <div class="ui-bar ui-bar-b">
+
+                        <label for="cboCTC_level">Creature Taming Sill Level:</label>
+                        <select name="cboCTC_level" id="cboCTC_level">
+                            <option value="1">Lv.1</option>
+                            <option value="2">Lv.2</option>
+                            <option value="3">Lv.3</option>
+                            <option value="4">Lv.4</option>
+                            <option value="5">Lv.5</option>
+                            <option value="6">Lv.6</option>
+                            <option value="7">Lv.7</option>
+                            <option value="8">Lv.8</option>
+                            <option value="9">Lv.9</option>
+                            <option value="10" selected>Lv.10</option>
+                        </select>
+
+                        <label for="cboCTC_plus" >Creature Taming Card Enchant:</label>
+                        <select name="cboCTC_plus" id="cboCTC_plus">
+                            <option value="1">+1</option>
+                            <option value="2">+2</option>
+                            <option value="3">+3</option>
+                            <option value="4">+4</option>
+                            <option value="5">+5</option>
+                            <option value="6">+6</option>
+                            <option value="7">+7</option>
+                            <option value="8">+8</option>
+                            <option value="9">+9</option>
+                            <option value="10">+10</option>
+                        </select>
+
+                        <div class="ui-field-contain">
+                            <label for="txtBonusLevel">Level Bonus:</label>
+                            <input type="text" name="txtBonusLevel" id="txtBonusLevel" placeholder="+0" value="">
+
+                            <label for="txtBonusPercen">Chance Bonus:</label>
+                            <input type="text" name="txtBonusPercen" id="txtBonusPercen" placeholder="0%" value="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ui-block-b">
+                    <div class="ui-bar ui-bar-b">
+
+                        <div class="ui-grid-a">
+                            <div class="ui-block-a">
+                                <div class="ui-bar ui-bar-b">
+                                    
+                                    <label for="sliderEmblem">Emblem:</label>
+                                    <input type="checkbox" data-role="flipswitch" name="sliderEmblem" id="sliderEmblem" >
+
+                                    <label for="sliderGlasses">Crystal Glasses:</label>
+                                    <input type="checkbox" data-role="flipswitch" name="sliderGlasses" id="sliderGlasses" >
+
+                                    <label for="sliderSword">Crystal Sword:</label>
+                                    <input type="checkbox" data-role="flipswitch" name="sliderSword" id="sliderSword" >
+
+
+                                </div>
+                            </div>
+
+                            <div class="ui-block-b">
+                                <div class="ui-bar ui-bar-b">
+
+                                    <label for="sliderRudra">Rudra Set:</label>
+                                     <input type="checkbox" data-role="flipswitch" name="sliderRudra" id="sliderRudra" >
+
+                                    <label for="cboRing1">Circus Ring:</label>
+                                    <select name="cboRing1" id="cboRing1" >
+                                        <option value="0"></option>
+                                        <option value="1">Taming lv 1</option>
+                                        <option value="2">Taming lv 2</option>
+                                    </select>
+                                    
+                                    <label for="cboRing2">Circus Ring:</label>
+                                    <select name="cboRing2" id="cboRing2" >
+                                        <option value="0"></option>
+                                        <option value="1">Taming lv 1</option>
+                                        <option value="2">Taming lv 2</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div><!-- /grid-a -->
+
+                    </div>
+                </div>
+            </div><!-- /grid-a -->
+
+            <button class="ui-shadow ui-btn ui-corner-all ui-btn ui-btn-a" id="cmdTame">Tame it !</button>
+            
+            <div class="ui-grid-a">
+                <div class="ui-block-a"><div class="ui-bar ui-bar-b">
+                    <!-- <textarea id="text-EXTRA" style="font-size: small" rows="20"></textarea>-->
+                    <div id='divLog' style="font-size:small"></div>
+                </div></div>
+                <div class="ui-block-b"><div class="ui-bar ui-bar-b">
+                    <div class="ui-field-contain">
+                        
+                            <label for="txtChance">Chances:</label>
+                            <input type="text" name="txtChance" id="txtChance" placeholder="0%" value="">
+                        
+                            <label for="txtCardsUsed">Cards Used:</label>
+                            <input type="text" name="txtCardsUsed" id="txtCardsUsed" placeholder="0" value="">
+
+                            <label for="txtCardsWasted">Cards Faliled:</label>
+                            <input type="text" name="txtCardsWasted" id="txtCardsWasted" placeholder="0" value="">
+                        
+                            <label for="txtCardsTamed">Cards Tamed:</label>
+                            <input type="text" name="txtCardsTamed" id="txtCardsTamed" placeholder="0" value="">
+                        
+                            <label for="txtSuccesRate">Success Rate:</label>
+                            <input type="text" name="txtSuccesRate" id="txtSuccesRate" placeholder="0%" value="">
+                        </div>
+                </div></div>
+            </div><!-- /grid-a -->
+            
+            
+
+        </div><!-- /main -->
+
+        <!-- Pie de pagina -->
+        <div data-role="footer" data-theme="b" data-position="fixed" style="text-align: center;vertical-align: middle;">
+
+        </div><!-- /footer -->
+
+    </div><!-- /page -->
+
+    <script type="application/javascript" src="js/pages/index.js"></script>
+    <script type="application/javascript">
+        //Evento al cargar la pagina
+        $(document).on("pagecreate", "#viewMain", function() {
+            //$( "body>[data-role='panel']" ).panel(); //<-Precarga el Panel MainMenu           
+            Iniciar();
+        });
+
+    </script>
+
+</body>
+
+</html>
