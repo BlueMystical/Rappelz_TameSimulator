@@ -269,17 +269,25 @@
         <!-- Cuerpo -->
         <div role="main" class="ui-content" data-theme="b" style="width: 98%">
 
-            <label for="cboCreatureAffiliation">What do you want to tame?:</label>
-            <select name="cboCreatureAffiliation" id="cboCreatureAffiliation">
-                <option value=""></option>
-            </select>
+            <fieldset class="ui-grid-a">
+                <div class="ui-block-a">
+                    <label for="cboCreatureAffiliation">What do you want to tame?:</label>
+                    <select name="cboCreatureAffiliation" id="cboCreatureAffiliation"><option value=""></option></select>
+                </div>
+                <div class="ui-block-b">
+                    <label for="cboPetList">Choose your Pet:</label>           
+                    <select data-theme="a" name="cboPetList" id="cboPetList"><option value=""></option></select></div>
+            </fieldset>
+            
+            <label for="searchPetList">Or Find your pet by Name:</label>   
+            <ul data-role="listview" data-filter="true" data-filter-reveal="true" id="searchPetList" data-filter-placeholder="Search Creature Name..." data-inset="true">
+                <li><a href="#">Apple</a></li>
+            </ul>
 
-            <label for="cboPetList">Choose your Pet:</label>
-            <select data-theme="a" name="cboPetList" id="cboPetList">
-                <option value=""></option>
-            </select>
-
+            <!-- Middle Section -->
             <div class="ui-grid-a">
+                
+                <!-- Left Section -->
                 <div class="ui-block-a">
                     <div class="ui-bar ui-bar-b">
 
@@ -312,15 +320,16 @@
                         </select>
 
                         <div class="ui-field-contain">
-                            <label for="txtBonusLevel">Level Bonus:</label>
+                            <label for="txtBonusLevel">Bonus Lv:</label>
                             <input type="text" name="txtBonusLevel" id="txtBonusLevel" placeholder="+0" value="">
 
-                            <label for="txtBonusPercen">Chance Bonus:</label>
+                            <label for="txtBonusPercen">Bonus %:</label>
                             <input type="text" name="txtBonusPercen" id="txtBonusPercen" placeholder="0%" value="">
                         </div>
                     </div>
                 </div>
 
+                <!-- Right Section -->
                 <div class="ui-block-b">
                     <div class="ui-bar ui-bar-b">
 
@@ -347,20 +356,21 @@
                                     <label for="sliderRudra">Rudra Set:</label>
                                      <input type="checkbox" data-role="flipswitch" name="sliderRudra" id="sliderRudra" >
 
-                                    <label for="cboRing1">Circus Ring:</label>
-                                    <select name="cboRing1" id="cboRing1" >
+                                    <br>
+                                    <label for="cboLvBonus">Other Level Bonuses: <br>(Dusk Rings, Helmet, Armors, Colection Cards, etc.)</label>
+                                    <select name="cboLvBonus" id="cboLvBonus" >
                                         <option value="0"></option>
-                                        <option value="1">Taming lv 1</option>
-                                        <option value="2">Taming lv 2</option>
+                                        <option value="1">+1</option>
+                                        <option value="2">+2</option>
+                                        <option value="3">+3</option>
+                                        <option value="4">+4</option>
+                                        <option value="5">+5</option>
+                                        <option value="6">+6</option>
+                                        <option value="7">+7</option>
+                                        <option value="8">+8</option>
+                                        <option value="9">+9</option>
+                                        <option value="10">+10</option>
                                     </select>
-                                    
-                                    <label for="cboRing2">Circus Ring:</label>
-                                    <select name="cboRing2" id="cboRing2" >
-                                        <option value="0"></option>
-                                        <option value="1">Taming lv 1</option>
-                                        <option value="2">Taming lv 2</option>
-                                    </select>
-
                                 </div>
                             </div>
                         </div><!-- /grid-a -->
@@ -371,6 +381,7 @@
 
             <button class="ui-shadow ui-btn ui-corner-all ui-btn ui-btn-a" id="cmdTame">Tame it !</button>
             
+            <!-- Bottom Section -->
             <div class="ui-grid-a">
                 <div class="ui-block-a"><div class="ui-bar ui-bar-b">
                     <!-- <textarea id="text-EXTRA" style="font-size: small" rows="20"></textarea>-->
@@ -396,8 +407,6 @@
                         </div>
                 </div></div>
             </div><!-- /grid-a -->
-            
-            
 
         </div><!-- /main -->
 
@@ -411,6 +420,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151418426-1"></script>
     <script type="application/javascript" src="js/pages/index.min.js"></script>
+    <!--<script type="application/javascript" src="js/pages/index.js"></script> -->
     <script type="application/javascript">
         //Google Analytics:
         window.dataLayer = window.dataLayer || [];
@@ -424,7 +434,5 @@
         Iniciar();
         });
     </script>
-
 </body>
-
 </html>
